@@ -47,14 +47,14 @@ namespace AI_TowerDefense
             _lane1 = new PlayerLane();
             _lane2 = new PlayerLane();
             
-            _playerA = new Player("A", _lane1, _lane2);
-            _playerB = new Player("B", _lane2, _lane1);
+            _playerA = new Player("O", _lane1, _lane2);
+            _playerB = new Player("H", _lane2, _lane1);
 
             // here you replace the selected strategy with your strategy class(es).
             // Your strategy should at least be able to beat random!
             
-            _playerAStrategy = new RandomStrategyLoggerDemo(_playerA);
-            _playerBStrategy = new RandomStrategyLoggerDemo(_playerB);
+            _playerAStrategy = new GongiStrat2(_playerA, GongiStrat2.TowerFormationType.H_Shape);
+            _playerBStrategy = new GongiStrat3(_playerB, GongiStrat3.TowerFormationType.H_Shape);
         }
 
         public static TowerDefense Instance => instance ??= new TowerDefense();
