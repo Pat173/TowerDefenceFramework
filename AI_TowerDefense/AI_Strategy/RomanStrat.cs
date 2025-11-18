@@ -7,7 +7,7 @@ namespace AI_Strategy
     /*
      * very simple example strategy based on random placement of units.
      */
-    public class GongiStrat4 : AbstractStrategy
+    public class RomanStrat : AbstractStrategy
     {
         private static Random random = new Random();
 
@@ -19,7 +19,7 @@ namespace AI_Strategy
         private int m_defenseLaneStart;
         private int m_defenseLaneDirection; // -1 = up, 1 = down
 
-        public GongiStrat4(Player player, int attackRoundAmount, int defenseLaneAmount, int defenseStartLane, int defenseDir) : base(player)
+        public RomanStrat(Player player, int attackRoundAmount, int defenseLaneAmount, int defenseStartLane, int defenseDir) : base(player)
         {
             m_amountOfAttackRounds = attackRoundAmount;
             m_defenseLaneAmount = defenseLaneAmount;
@@ -70,13 +70,13 @@ namespace AI_Strategy
 
         public override void DeploySoldiers()
         {
-            if (player.Gold > (m_amountOfAttackRounds * 14) && !m_sendingAttack)
+            if (player.Gold > (m_amountOfAttackRounds * 8) && !m_sendingAttack)
             {
                 m_sendingAttack = true;
                 m_attackRound = 0;
             }
 
-            if (m_attackRound > m_amountOfAttackRounds)
+            if (m_attackRound >= m_amountOfAttackRounds)
             {
                 m_sendingAttack = false;
                 return;
@@ -85,15 +85,13 @@ namespace AI_Strategy
             if (m_sendingAttack)
             {
 
-                for (int i = 0; i < 7; i++)
-                {
-                    player.TryBuySoldier<GongiSoldier>(i); 
-                }
-                m_attackRound++;
+                for (int x = 0; x < 7; x += 2) // 0, 2, 4, 6
+                    player.TryBuySoldier<GongiRoman>(x);
 
+                m_attackRound++;
             }
-               
         }
+
 
         /*
          * called by the game play environment. The order in which the array is returned here is
