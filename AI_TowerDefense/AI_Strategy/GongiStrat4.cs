@@ -7,56 +7,30 @@ namespace AI_Strategy
     /*
      * very simple example strategy based on random placement of units.
      */
-    public class GongiStrat3 : AbstractStrategy
+    public class GongiStrat4 : AbstractStrategy
     {
         private static Random random = new Random();
-        private bool m_firstTurn = true;
 
         private bool m_sendingAttack;
         private int m_attackRound = 0;
         private int m_amountOfAttackRounds = 3;
 
-        private int[,] m_currentFormation;
+        private int m_defenseLaneAmount;
 
-        public GongiStrat3(Player player, TowerFormationType formation, int attackRoundAmount) : base(player)
+        public GongiStrat4(Player player, int defensiveLaneAmount, int attackRoundAmount) : base(player)
         {
-            m_currentFormation = formation == TowerFormationType.O_Shape ? O_Formation : H_Formation;
             m_amountOfAttackRounds = attackRoundAmount;
+            m_defenseLaneAmount = defensiveLaneAmount;
         }
 
-        public enum TowerFormationType
+        public static int[] ShortFormation = new int[]
         {
-            O_Shape,
-            H_Shape,
-        }
-
-        public static int[,] O_Formation = new int[,]
-        {
-            {1,8},
-            {3,8},
-            {5,8},
-            {0,7},
-            {2,7},
-            {4,7},
-            {6,7},
-            {1,6},
-            {3,6},
-            {5,6},
+            1,3,5
         };
 
-        public static int[,] H_Formation = new int[,]
+        public static int[] LongFormation = new int[]
         {
-            {0,8},
-            {2,8},
-            {4,8},
-            {6,8},
-            {1,7},
-            {3,7},
-            {5,7},
-            {0,6},
-            {2,6},
-            {4,6},
-            {6,6},
+            0,2,4,6
         };
 
         /*
@@ -65,14 +39,27 @@ namespace AI_Strategy
          */
         public override void DeployTowers()
         {
-            //if (player.HomeLane.TowerCount() >= 10) return;
 
-            for (int i = 0; i < m_currentFormation.GetLength(0); i++)
+            for (int i = 0; i < m_defenseLaneAmount; i++)
             {
-
-                int x = m_currentFormation[i, 0];
-                int y = m_currentFormation[i, 1];
-                player.TryBuyTower<GongiTower>(x, y);
+                if (i % 2 == 0)
+                {
+                    for (int j = 0; j < LongFormation.Length; j++)
+                    {
+                        int x = LongFormation[j];
+                        int y = 11 - i;
+                        if (player.TryBuyTower<GongiTower>(x, y) == Player.TowerPlacementResult.NotEnoughGold) return;
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < ShortFormation.Length; j++)
+                    {
+                        int x = ShortFormation[j];
+                        int y = 11 - i;
+                        if (player.TryBuyTower<GongiTower>(x, y) == Player.TowerPlacementResult.NotEnoughGold) return;
+                    }
+                }
             }
 
         }
