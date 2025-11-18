@@ -53,6 +53,7 @@
     <Compile Include="AI_TowerDefense\AI_Strategy\AbstractStrategy.cs" />
     <Compile Include="AI_TowerDefense\AI_Strategy\GongiSoldier.cs" />
     <Compile Include="AI_TowerDefense\AI_Strategy\CounterStratSpear.cs" />
+    <Compile Include="AI_TowerDefense\AI_Strategy\CounterStratRush.cs" />
     <Compile Include="AI_TowerDefense\AI_Strategy\GongiStrat4.cs" />
     <Compile Include="AI_TowerDefense\AI_Strategy\GongiStrat3.cs" />
     <Compile Include="AI_TowerDefense\AI_Strategy\GongiStrat2.cs" />
