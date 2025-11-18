@@ -7,7 +7,7 @@ namespace AI_Strategy
     /*
      * very simple example strategy based on random placement of units.
      */
-    public class GongiStrat4 : AbstractStrategy
+    public class CounterStratSpear : AbstractStrategy
     {
         private static Random random = new Random();
 
@@ -19,7 +19,7 @@ namespace AI_Strategy
         private int m_defenseLaneStart;
         private int m_defenseLaneDirection; // -1 = up, 1 = down
 
-        public GongiStrat4(Player player, int attackRoundAmount, int defenseLaneAmount, int defenseStartLane, int defenseDir) : base(player)
+        public CounterStratSpear(Player player, int attackRoundAmount, int defenseLaneAmount, int defenseStartLane, int defenseDir) : base(player)
         {
             m_amountOfAttackRounds = attackRoundAmount;
             m_defenseLaneAmount = defenseLaneAmount;
@@ -70,7 +70,7 @@ namespace AI_Strategy
 
         public override void DeploySoldiers()
         {
-            if (player.Gold > (m_amountOfAttackRounds * 14) && !m_sendingAttack)
+            if (player.Gold > (m_amountOfAttackRounds * 6) && !m_sendingAttack)
             {
                 m_sendingAttack = true;
                 m_attackRound = 0;
@@ -85,7 +85,7 @@ namespace AI_Strategy
             if (m_sendingAttack)
             {
 
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     player.TryBuySoldier<GongiSoldier>(i); 
                 }
